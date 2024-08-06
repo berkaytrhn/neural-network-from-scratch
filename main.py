@@ -1,7 +1,3 @@
-import numpy as np
-
-
-
 def main() -> None:
     print("main func")
 
