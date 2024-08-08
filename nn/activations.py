@@ -1,8 +1,5 @@
 import numpy as np
 
-
-class ActivationBase:   
-
 class ReLUActivation:
     def __init__(self) -> None:
         pass
