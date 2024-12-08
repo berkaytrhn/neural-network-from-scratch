@@ -1,2 +1,2 @@
-from .graph.neuron import Neuron
-from .vectorized.dense import DenseLayer
+from .graph import *
+from .vectorized import *
