@@ -1,1 +1,1 @@
-from neuron import Neuron
+from .neuron import Neuron

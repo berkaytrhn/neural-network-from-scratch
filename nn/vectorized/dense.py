@@ -75,4 +75,5 @@ class DenseLayer:
         Returns:
                 None
         """
+        # TBD
         print(d_output)
