@@ -1,8 +1,7 @@
-from dense import DenseLayer
+from nn.vectorized import DenseLayer
 import numpy as np
-from nn.utils import Sigmoid
 from typing import List
-
+from nn.utils import Sigmoid
 
 class Network:
     
@@ -19,7 +18,7 @@ class Network:
         for layer in self.layers:
             value = layer.forward(value)
 
-        print(value)
+        return value
     def backward(self):
         pass
     
@@ -36,12 +35,19 @@ if __name__ == "__main__":
     sig = Sigmoid()
     
     nn.add(
-        layer1,
-        layer2,
-        layer3,
-        layer4,
-        sig
+        layer1
     )
+    nn.add(
+        layer2
+    )
+    nn.add(
+        layer3
+    )
+    nn.add(
+        layer4
+    )
+      
+    
     
     outputs = nn(X)
-    print(outputs)
+    print(outputs.shape)
