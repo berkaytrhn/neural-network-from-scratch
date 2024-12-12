@@ -1,6 +1,7 @@
 import numpy as np
+from nn.utils import Component
 
-class Neuron:
+class Neuron(Component):
 
     def __init__(
         self,

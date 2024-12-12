@@ -1,12 +1,13 @@
 import numpy as np
 from abc import ABC, abstractmethod
+from .component import Component
 
-class Activation(ABC):
+class Activation(Component):
     """
     Base Class For Activations
     """
     @abstractmethod
-    def __call__(self, x):
+    def forward(self, x):
         pass
     @abstractmethod
     def backward(self):
@@ -18,7 +19,7 @@ class ReLU(Activation):
         # will be used for storing input values for backprop.
         self.cache=None
     
-    def __call__(
+    def forward(
         self, 
         x: np.ndarray
     ) -> np.ndarray:
@@ -27,14 +28,16 @@ class ReLU(Activation):
         """
         # store input value for backward pass
         self.cache=x
-        return np.max(0, x)
+        return np.maximum(0, x)
     
-    def backward(self):
+    def backward(self, grad_out):
         """
         Derivative of ReLU, 
         1 if >=0, else 0
         """
-        return np.where(self.cache > 0, 1, 0)
+        # Same shape since relu does not change the shape 
+        return grad_out * np.where(self.cache > 0, 1, 0)
+    
     
     
 class Sigmoid(Activation):
@@ -42,16 +45,17 @@ class Sigmoid(Activation):
     def __init__(self) -> None:
         self.output_cache=None
 
-    def __call__(self, z:np.ndarray):
+    def forward(self, z:np.ndarray):
         self.output_cache = 1 / (1 + np.exp(-z))
         return self.output_cache
 
-    def backward(self):
-        return self.output_cache * (1 - self.output_cache)
+    def backward(self, grad_out):
+        # Same shape since sigmoid does not change the shape 
+        return grad_out * self.output_cache * (1 - self.output_cache)
     
 class Softmax(Activation):
     
-    def __call__(
+    def forward(
         self, 
         input_array: np.ndarray
     ) -> np.ndarray:

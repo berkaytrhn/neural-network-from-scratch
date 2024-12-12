@@ -1,6 +1,7 @@
 import numpy as np
+from nn.utils import Component
 
-class DenseLayer:
+class DenseLayer(Component):
     """
     A class used to represent a single layer in a neural network.
 
@@ -71,9 +72,16 @@ class DenseLayer:
         """
         Backward pass of one layer of network
         Parameters:
-                d_output (np.ndarray): (n_features, n_neurons), gradient values for this layer
+                d_output (np.ndarray): (m, n_neurons), gradient values for this layer
         Returns:
                 None
         """
-        # TBD
-        print(d_output)
+        # (m,n_features).T * (m,n_neurons) -> (n_features, n_neurons)
+        dW = np.dot(self.inputs.T, d_output)
+        db = np.sum(d_output, axis=0)
+
+        self.grads = (dW, db)
+        
+        # should equal previosus layers' output shape -> (m, n_features)
+        prev_grads = np.dot(d_output, self.weights.T)
+        return prev_grads
